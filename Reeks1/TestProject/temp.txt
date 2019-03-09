@@ -1,0 +1,34 @@
+digraph {
+rankdir="LR";
+"0"[label="",shape=diamond];
+"0" -> "1";
+subgraph cluster_1 {
+rankdir="LR";
+"1" [label="1",color=white];
+"1v" [shape=diamond,label=""];
+"1" -> "1v" [color=white];
+}
+"1v" -> "2" [lhead=cluster_1 ltail=cluster_2];
+subgraph cluster_2 {
+rankdir="LR";
+"2" [label="22",color=white];
+"2v" [shape=diamond,label=""];
+"2" -> "2v" [color=white];
+}
+"2v" -> "3" [lhead=cluster_2 ltail=cluster_3];
+subgraph cluster_3 {
+rankdir="LR";
+"3" [label="9",color=white];
+"3v" [shape=diamond,label=""];
+"3" -> "3v" [color=white];
+}
+"3v" -> "4" [lhead=cluster_3 ltail=cluster_4];
+subgraph cluster_4 {
+rankdir="LR";
+"4" [label="5",color=white];
+"4v" [shape=diamond,label=""];
+"4" -> "4v" [color=white];
+}
+"4v" -> "5" [lhead=cluster_4 ltail=cluster_5];
+"5" [shape=point];
+}
