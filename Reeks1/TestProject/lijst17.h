@@ -8,7 +8,7 @@
 //
 //
 //speciale code voor iteratoren
-//#define ITERATOR
+#define ITERATOR
 
 #include <iostream>
 #include <fstream>
@@ -101,13 +101,42 @@ public:
 //iterator; gaat ervan uit dat alles const is
     public: class iterator{
         public:
-            iterator(Lijstknoop<T>* l=0);
-            const T& operator*() const;
-            const iterator& operator++();
-            bool operator!=(const iterator& i);
+			iterator(Lijstknoop<T>* l = 0) {
+				this->knoop = l;
+			}
+			const T& operator*() const {
+				return this->knoop->sleutel;
+			}
+			const iterator& operator++() {
+				this->knoop = (this->knoop->volgend).get();
+				return *this;
+			}
+			bool operator!=(const iterator& i) {
+				return this->knoop != i.knoop;
+			}
+			bool operator==(const iterator& i) {
+				return this->knoop == i.knoop;
+			}
+		private:
+			Lijstknoop<T> * knoop;
     };
-    iterator begin() const;
-    iterator end() const;
+
+	iterator begin() const
+	{
+		iterator start(this->get());
+		return start;
+	}
+
+	iterator end() const
+	{
+		Lijstknoop<T> *hulpknoop = this->get();
+		while (hulpknoop != nullptr) {
+			hulpknoop = (hulpknoop->volgend).get();
+		}
+		iterator hulp(hulpknoop);
+		return hulp;
+		
+	}
 
 };
 
@@ -253,9 +282,6 @@ inline Lijst<T>& Lijst<T>::operator=(Lijstknoopptr<T>&& lijstknoopptr)
 	cout << "move assignment operator with lijstknoopptr is used" << endl;
 	
 	Lijstknoopptr<T>::operator=(std::move(lijstknoopptr));
-
-
-	
 	return *this;
 }
 
@@ -273,7 +299,7 @@ void Lijst<T>::voegToe(const T& sleutel) {
 	*this = std::move(nieuw);	//calls the move assignment operator
 }
 
-#pragma region bla
+#pragma region given
 template<class T>
 bool Lijst<T>::isClone(const Lijst<T>& ander) const{
     const Lijst<T>* l1=this, *l2=&ander;//twee lopers
@@ -398,4 +424,7 @@ void Lijst<T>::teken(const char * bestandsnaam) const {
 
 
 #endif
+
+
+
 

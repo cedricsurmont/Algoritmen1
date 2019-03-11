@@ -3,7 +3,6 @@
 #include <cstdlib>
 #include "lijst17.h"
 #include <string>
-#include "lijsttest17.h"
 using std::cerr;
 using std::string;
 using std::cin;
@@ -53,8 +52,8 @@ int main(){
         verwijderd++;
         l.verwijder(123);
         Lijstknoop<int>::controle(gemaakt,verwijderd);
-        //for (auto s:l)
-        //    cerr<<s<<"\n";								//ITERATOR 
+        for (auto s:l)
+            cerr<< "Met iterator: " << s <<"\n";								//ITERATOR 
         l.schrijf(cerr);
         cerr<<"Losse oproep maak\n";
         maak();

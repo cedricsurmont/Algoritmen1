@@ -23,8 +23,5 @@
     <ClInclude Include="lijst17.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="lijsttest17.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
