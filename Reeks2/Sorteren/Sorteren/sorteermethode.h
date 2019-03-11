@@ -114,3 +114,8 @@ inline void Sorteermethode<T>::meet(int kortste, int langste, ostream & os)
 
 	}
 }
+
+template<typename T>
+inline void ShellSort<T>::operator()(vector<T>& v) const
+{
+}
