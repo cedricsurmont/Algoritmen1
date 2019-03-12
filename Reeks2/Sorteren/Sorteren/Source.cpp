@@ -51,6 +51,7 @@ void testVector(int size) {
 }
 
 int main(int argc, char** argv) {
+	//pushen vanaf school //negeer dit
 	Sortvector<int> s(30);
 	s.vul_random_zonder_dubbels();
 	cout << "Beginvector: " << s << endl;
