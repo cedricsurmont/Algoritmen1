@@ -123,6 +123,7 @@
   <ItemGroup>
     <ClInclude Include="chrono.h" />
     <ClInclude Include="csv.h" />
+    <ClInclude Include="intstring.h" />
     <ClInclude Include="sorteermethode.h" />
     <ClInclude Include="sortvector.h" />
   </ItemGroup>

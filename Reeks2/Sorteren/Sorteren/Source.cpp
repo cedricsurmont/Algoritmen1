@@ -2,7 +2,7 @@
 #include "sorteermethode.h";
 #include "chrono.h";
 #include "csv.h";
-
+#include "intstring.h";
 
 using std::cout;
 
@@ -52,21 +52,14 @@ void testVector(int size) {
 
 int main(int argc, char** argv) {
 	//pushen vanaf school //negeer dit
-	Sortvector<int> s(30);
+	Sortvector<Intstring> s(30);
 	s.vul_random_zonder_dubbels();
-	cout << "Beginvector: " << s << endl;
-	STLSort<int> sorter;
+	cout << "Voor sorteren: " << s << endl; 
+	InsertionSort<Intstring> sorter;
 	sorter(s);
-	cout << "Na STLSort: " << s << endl;
-	InsertionSort<int> sorter2;
-	s.vul_random_zonder_dubbels();
-	sorter2(s);
-	cout << "Na InsertionSort: " << s << endl;
-
-	cout << "STLSort" << endl;
-	sorter.meet(10, 1000000, std::cout);
-	cout << "InsertionSort" << endl;
-	sorter2.meet(10, 1000000, std::cout);
+	cout << "Na sorteren: " << s << endl;
+	
+	
 	cin.get();
 	return 0;
 }
