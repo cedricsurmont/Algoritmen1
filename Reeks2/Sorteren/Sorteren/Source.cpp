@@ -10,7 +10,20 @@ using std::endl;
 using std::cin;
 using std::string;
 
-
+template <class T>
+void testAlgorithm(Sorteermethode<T> &s, int size) {
+	Sortvector<int> v(size);
+	v.vul_random_zonder_dubbels();
+	cout << "Vector voor sorteren: " << v << endl;
+	s(v);
+	if (v.is_gesorteerd()) {
+		cout << "Vector na sorteren: " << v << endl;
+	}
+	else {
+		cout << "Sorteren is mislukt :( ..." << endl << v << endl;
+	}
+	
+}
 
 void testVector(int size) {
 	Sortvector<int> s(size);
@@ -52,12 +65,16 @@ void testVector(int size) {
 
 int main(int argc, char** argv) {
 	//pushen vanaf school //negeer dit
-	Sortvector<Intstring> s(30);
-	s.vul_random_zonder_dubbels();
-	cout << "Voor sorteren: " << s << endl; 
-	InsertionSort<Intstring> sorter;
-	sorter(s);
-	cout << "Na sorteren: " << s << endl;
+	//Sortvector<int> s(30);
+	//s.vul_random_zonder_dubbels();
+	//cout << "Voor sorteren: " << s << endl; 
+	//LeftPivotQuickSort<int> sorter;
+	//sorter(s);
+	//cout << "Na sorteren: " << s << endl;
+	//sorter.meet(10, 100000, std::cout);
+
+	RightPivotQuickSort<int> s;
+	testAlgorithm(s, 19);
 	
 	
 	cin.get();

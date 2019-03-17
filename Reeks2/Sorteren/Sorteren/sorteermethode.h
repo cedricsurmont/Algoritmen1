@@ -8,12 +8,20 @@
     using std::swap;
     using std::endl;
     using std::cout;
+	using std::cerr;
     using std::setw;
 #include <algorithm>   // voor sort()-methode uit STL
 
 /** class Sorteermethode
     \brief abstracte klasse van methodes die een vector sorteren
 */
+template <class T>
+ostream& operator<<(ostream& os, const vector<T>& v) {
+	for (auto e : v) {
+		os << e << " ";
+	}
+	return os;
+}
 template <typename T>
 class Sorteermethode{
     public:
@@ -59,17 +67,23 @@ class InsertionSort : public Sorteermethode<T>{
 
 /** \class Shellsort
 */
- 
 template <typename T>
 class ShellSort : public Sorteermethode<T>{
     public:
         void operator()(vector<T> & v) const;
 };
 
+/** \class SelectionSort
+*/
+template <typename T>
+class SelectionSort : public Sorteermethode<T> {
+public:
+	void operator()(vector<T> & v) const;
+};
+
 /** \class MergeSort
 	Topdown, recursive version with only 1 additional auxiliary vector
 */
-
 template <typename T>
 class MergeSort : public Sorteermethode<T> {
 public:
@@ -78,6 +92,61 @@ private:
 	void TopDownSplitMerge(vector<T> &b, int begin, int end, vector<T> &v) const;
 	void TopDownMerge(vector<T> &v, int begin, int middle, int end, vector<T> &b) const;
 };
+
+/** \class HeapSort
+	
+*/
+template <typename T>
+class HeapSort : public Sorteermethode<T> {
+public:
+	void operator()(vector<T> & v) const;
+private:
+	void heapify(vector<T> &v, int root, int end)const;
+};
+
+/** \class LeftPivotQuickSort
+
+*/
+template <typename T>
+class LeftPivotQuickSort : public Sorteermethode<T> {
+public:
+	void operator()(vector<T> & v) const;
+private:
+	void LeftPivotQuickSortSplit(vector<T> &v, int begin, int end) const;
+};
+
+/** \class RightPivotQuickSort
+
+*/
+template <typename T>
+class RightPivotQuickSort : public Sorteermethode<T> {
+public:
+	void operator()(vector<T> & v) const;
+private:
+	void RightPivotQuickSortSplit(vector<T> &v, int begin, int end) const;
+};
+
+/** \class DualPivotQuickSort
+
+*/
+template <typename T>
+class DualPivotQuickSort : public Sorteermethode<T> {
+public:
+	void operator()(vector<T> & v) const;
+private:
+	void dualPivotQuickSort(vector<T> &v, int begin, int end);
+	int partition(vector<T> &v, int begin, int end, int * lp) const;
+};
+
+/** \class CountingSort
+
+*/
+template <typename T>
+class CountingSort : public Sorteermethode<T> {
+public:
+	void operator()(vector<T> & v) const;
+};
+
 
 #endif 
 
@@ -88,7 +157,7 @@ inline void Sorteermethode<T>::meet(int kortste, int langste, ostream & os)
 	Chrono timer;
 	Chrono timer2;
 	Chrono timer3;
-	for (int i = kortste; i < langste; i *= 10) {
+	for (int i = kortste; i <= langste; i *= 10) {
 		Sortvector<T> vector(i);
 		vector.vul_random_zonder_dubbels();
 		timer.start();
@@ -115,38 +184,40 @@ void STLSort<T>::operator()(vector<T> & v) const {
 	sort(v.begin(), v.end());
 }
 
+template <typename T>
+void InsertionSort<T>::operator()(vector<T> & v) const {
+	for (int i = 1; i < v.size(); i++) {
+		T h = move(v.at(i));
+		int j = i - 1;
+		while (j >= 0 && h < v.at(j)) {
+			v.at(j+1) = move(v.at(j));
+			j--;
+		}
+		v.at(j+1) = move(h);
+	}
+}
+
 template<typename T>
 inline void ShellSort<T>::operator()(vector<T>& v) const
 {
+	cerr << "SHELLSORT" << endl;
 	int sedgewick[5] = { 1, 5, 19, 41, 109 };
-	for (int j = 4; j >= 0; j--) {
-		int k = sedgewick[j];
+	for (int l = 4; l >= 0; l--) {
+		int k = sedgewick[l];
 		for (int i = k; i < v.size(); i++) {
 			T h = move(v.at(i));
-			int l = i - k;
-			while (l >= 0 && h < v.at(l)) {
-				v.at(l + k) = move(v.at(l));
-				l -= k;
+			int j = i - k;
+			while (j >= 0 && h < v.at(j)) {
+				v.at(j + k) = move(v.at(j));
+				j -= k;
 			}
-			v.at(l + k) = move(h);
+			v.at(j + k) = move(h);
 		}
 	}
 	
 }
 
-template <typename T>
-void InsertionSort<T>::operator()(vector<T> & v) const {
-	for (int i = 1; i < v.size(); i++) {
-		T h;
-		h = move(v[i]);
-		int j = i - 1;
-		while (j >= 0 && h < v[j]) {
-			v[j + 1] = move(v[j]);
-			j--;
-		}
-		v[j + 1] = move(h);
-	}
-}
+
 
 template<typename T>
 inline void MergeSort<T>::operator()(vector<T>& v) const
@@ -166,9 +237,15 @@ inline void MergeSort<T>::operator()(vector<T>& v) const
 template<typename T>
 inline void MergeSort<T>::TopDownSplitMerge(vector<T> &help, int begin, int end, vector<T> &v) const
 {
-	//de size van de overgbleven vector is 1? => niet meer splitten
-	if (end - begin < 2)
+	//de size van de overgebleven vector is 1? => niet meer splitten
+	//int runsize = end - begin;
+	if (end - begin < 2) {
+		//cerr << "Run size: " << runsize << endl << v << endl;
 		return;
+	}
+	//cerr << "v: " << v << endl;
+	//cerr << "h: " << v << endl << endl;
+	//cerr << "Run size: " << runsize << endl << v << endl;
 	int middle = (end + begin) / 2;
 	//recursief beide helften van V sorteren in B
 	TopDownSplitMerge(v, begin, middle, help);	//links
@@ -194,5 +271,209 @@ inline void MergeSort<T>::TopDownMerge(vector<T> &v, int begin, int middle, int 
 			help.at(k) = v.at(j);	//efficient???
 			j++;
 		}
+		//cerr << "V: " << v << endl;
+		//cerr << "H: " << help << endl;
 	}
+}
+
+//template<typename T>
+//inline void SelectionSort<T>::operator()(vector<T>& v) const
+//{
+//	//searching largest element
+//	for (int i = v.size() - 1; i > 0; i--) {
+//		int imax = i;
+//		for (int j = 0; j < i; j++) {
+//			if (v.at(j) > v.at(imax)) {
+//				imax = j;
+//			}
+//		}
+//		swap(v.at(imax), v.at(i));
+//	}
+//}
+template<typename T>
+inline void SelectionSort<T>::operator()(vector<T>& v) const 
+{
+	//searching smallest element
+	cerr << "SelectionSort selecting the smallest element" << endl;
+	for (int i = 0; i < v.size(); i++) {
+		int ismall = i;
+		for (int j = v.size() - 1; j > i; j--) {
+			if (v.at(ismall) > v.at(j))
+				ismall = j;
+		}
+		swap(v.at(ismall), v.at(i));
+	}
+}
+
+template<typename T>
+inline void HeapSort<T>::operator()(vector<T>& v) const
+{
+	cerr << "HEAPSORT" << endl;
+	for (int i = v.size()/2 -1; i>=0; i--) {
+		//build a maxheap
+		heapify(v, i, v.size());
+	}
+	for (int i = v.size() - 1; i > 0; i--) {
+		//place biggest number at the back of the vector
+		swap(v.at(0), v.at(i));
+		//heapify the rest of the vector
+		heapify(v, 0, i);
+	}
+}
+
+template<typename T>
+inline void HeapSort<T>::heapify(vector<T>& v, int root, int end) const
+{
+	int largest = root;
+	int left = 2 * root + 1;
+	int right = 2 * root + 2;
+
+	if (left < end && v.at(left) > v.at(largest)) {
+		largest = left;
+	}
+	if (right < end && v.at(right) > v.at(largest)) {
+		largest = right;
+	}
+	if (largest != root) {
+		swap(v.at(root), v.at(largest));
+		heapify(v, largest, end);		//heapify the subtree that has changed
+	}
+}
+
+template<typename T>
+inline void LeftPivotQuickSort<T>::operator()(vector<T>& v) const
+{
+	LeftPivotQuickSortSplit(v, 0, v.size() - 1);
+}
+
+template<typename T>
+inline void LeftPivotQuickSort<T>::LeftPivotQuickSortSplit(vector<T>& v, int begin, int end) const
+{
+	if (begin < end - 1) {
+		T pivot = v.at(begin);		//copy
+		int i = begin;
+		int j = end;
+		while (v.at(j) > pivot)
+			j--;
+		while (i < j) {
+			swap(v.at(i), v.at(j));
+			i++;
+			while (v.at(i) < pivot)
+				i++;
+			j--;
+			while (v.at(j) > pivot)
+				j--;
+		}
+		LeftPivotQuickSortSplit(v, begin, j + 1);
+		LeftPivotQuickSortSplit(v, j + 1, end);
+	}
+}
+
+template<typename T>
+inline void RightPivotQuickSort<T>::operator()(vector<T>& v) const
+{
+	//Stackoverflow! Don't use
+	RightPivotQuickSortSplit(v, 0, v.size() - 1);
+}
+
+template<typename T>
+inline void RightPivotQuickSort<T>::RightPivotQuickSortSplit(vector<T>& v, int begin, int end) const
+{
+	if (end - begin > 1) {
+		T pivot = v.at(end);
+		int i = begin;
+		int j = end;
+		while (v.at(i) < pivot)
+			i++;
+		while (i < j) {
+			swap(v.at(i), v.at(j));
+			j--;
+			while (v.at(j) > pivot)
+				j--;
+			i++;
+			while (v.at(i) < pivot)
+				i++;
+		}
+		RightPivotQuickSortSplit(v, begin, i-1 );
+		RightPivotQuickSortSplit(v, i , end);
+	}
+}
+
+template<typename T>
+inline void DualPivotQuickSort<T>::operator()(vector<T>& v) const
+{
+	dualPivotQuickSort(v, 0, v.size() - 1);
+}
+
+template<typename T>
+inline void DualPivotQuickSort<T>::dualPivotQuickSort(vector<T>& v, int begin, int end)
+{
+	if (begin < end) {
+		int lp, rp;			//left and right pivot
+		rp = partition(v, begin, end, &lp);
+		dualPivotQuickSort(v, begin, lp - 1);
+		dualPivotQuickSort(v, lp + 1, rp - 1);
+		dualPivotQuickSort(v, rp + 1, end);
+	}
+	
+}
+
+template<typename T>
+inline int DualPivotQuickSort<T>::partition(vector<T>& v, int begin, int end, int * lp) const
+{
+	if (v.at(begin) > v.at(end))
+		swap(v.at(begin), v.at(end));
+	int k = begin + 1;
+	int g = end - 1;
+	int m = begin + 1;
+	int leftPivot = v.at(begin);	
+	int rightPivot = v.at(end);		
+	while (m <= g) {
+		//Check the m element and place it in the correct subarray
+		if (v.at(m) < leftPivot) {		
+			swap(v.at(m), v.at(k));
+			k++;
+		}
+		else if (v.at(m) >= rightPivot) {	//maybe > inst of >=
+			while (v.at(g) > rightPivot && m < g)
+				g--;
+			swap(v.at(m), v.at(g));
+			g--;
+			if (v.at(m) < leftPivot) {
+				swap(v.at(m), v.at(k));
+				k++;
+			}
+		}
+		m++;	//next element
+	}
+	//to set pivots to correct positions
+	k--;
+	g++;
+	swap(v.at(begin), v.at(k));
+	swap(v.at(end), v.at(g));
+
+	//return values
+	*lp = k;
+	return g;
+}
+
+template<typename T>
+inline void CountingSort<T>::operator()(vector<T>& v) const
+{
+	int RANGE = 20;	//hardcoded, bad practice
+	vector<T> output(v.size()-1);
+	vector<int> count(RANGE);
+	//frequency table
+	for (int i = 0; i < v.size()-1; i++) {
+		count[v.at(i)]++;
+	}
+	//Modify frequency table
+	for (int i = 1; i < RANGE; i++)
+		count[i] += count[i - 1];
+	//Arrange output vector
+	for (int i = 0; i < v.size(); i++) {
+		output[count[v.at(i)]-1] = v.at(i);
+		count[v.at(i)]--;
+	}
+	v = output;
 }
