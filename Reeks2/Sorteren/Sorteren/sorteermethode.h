@@ -223,19 +223,15 @@ template<typename T>
 inline void MergeSort<T>::operator()(vector<T>& v) const
 {
 	int n = v.size();
-	vector<T> help(n);
-	//duplicate v in b;
-	//efficient???
-	for (int i = 0; i < n; i++) {
-		help.at(i) = v.at(i);
-	}
-	TopDownSplitMerge(help, 0, n, v);
+	vector<T> help((n+1)/2);
+
+	TopDownSplitMerge(v, 0, n, help);
 
 }
 
 
 template<typename T>
-inline void MergeSort<T>::TopDownSplitMerge(vector<T> &help, int begin, int end, vector<T> &v) const
+inline void MergeSort<T>::TopDownSplitMerge(vector<T> &v, int begin, int end, vector<T> &help) const
 {
 	//de size van de overgebleven vector is 1? => niet meer splitten
 	//int runsize = end - begin;
@@ -246,33 +242,43 @@ inline void MergeSort<T>::TopDownSplitMerge(vector<T> &help, int begin, int end,
 	//cerr << "v: " << v << endl;
 	//cerr << "h: " << v << endl << endl;
 	//cerr << "Run size: " << runsize << endl << v << endl;
-	int middle = (end + begin) / 2;
+	int middle =  begin + (end - begin) / 2;
 	//recursief beide helften van V sorteren in B
 	TopDownSplitMerge(v, begin, middle, help);	//links
 	TopDownSplitMerge(v, middle, end, help);	//rechts
 	//resultaten van b mergen in v
-	TopDownMerge(help, begin, middle, end, v);
+	TopDownMerge(v, begin, middle, end, help);
 
 }
 
 template<typename T>
 inline void MergeSort<T>::TopDownMerge(vector<T> &v, int begin, int middle, int end, vector<T> &help) const
 {
-	int i = begin;
-	int j = middle;
-	//zolang er elementen over zijn in de linker- of rechterhelften...
-	for (int k = begin; k < end; k++) {
-		//?
-		if (i < middle && (j >= end || v.at(i) <= v.at(j))) {
-			help.at(k) = v.at(i);	//efficient???
-			i++;
+	//copy first half in to help vector, with vector initialization by using another vector's iterators
+	help = { v.begin() + begin, v.begin() + middle };
+	int j = begin;		//index for element in result matrix
+	int ri = middle;	//to check boundaries
+	middle -= begin;	//to check boundaries, middle is now the number of elements in the left half
+	int li = 0;			//to check boundaries
+	//zolang er elementen over zijn in de linker- en rechterhelft...
+	while (li < middle && ri < end) {
+		if (help.at(li) <= v.at(ri)) {
+			v.at(j) = move(help.at(li));
+			j++; li++;
 		}
 		else {
-			help.at(k) = v.at(j);	//efficient???
-			j++;
+			v.at(j) = move(v.at(ri));
+			j++; ri++;
 		}
-		//cerr << "V: " << v << endl;
-		//cerr << "H: " << help << endl;
+	}
+	//Add the rest of the other half
+	while (li < middle) {
+		v.at(j) = help.at(li);
+		j++; li++;
+	}
+	while (ri < end) {
+		v.at(j) = v.at(ri);
+		j++; ri++;
 	}
 }
 
@@ -477,3 +483,4 @@ inline void CountingSort<T>::operator()(vector<T>& v) const
 	}
 	v = output;
 }
+

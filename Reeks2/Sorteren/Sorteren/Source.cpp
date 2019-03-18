@@ -12,6 +12,7 @@ using std::string;
 
 template <class T>
 void testAlgorithm(Sorteermethode<T> &s, int size) {
+//	cout << s.getClass() << endl;
 	Sortvector<int> v(size);
 	v.vul_random_zonder_dubbels();
 	cout << "Vector voor sorteren: " << v << endl;
@@ -73,7 +74,7 @@ int main(int argc, char** argv) {
 	//cout << "Na sorteren: " << s << endl;
 	//sorter.meet(10, 100000, std::cout);
 
-	RightPivotQuickSort<int> s;
+	MergeSort<int> s;
 	testAlgorithm(s, 19);
 	
 	
