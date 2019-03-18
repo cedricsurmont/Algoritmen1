@@ -66,7 +66,7 @@ void testVector(int size) {
 
 int main(int argc, char** argv) {
 	//pushen vanaf school //negeer dit
-	//Sortvector<int> s(30);
+	Sortvector<int> s(2000);
 	//s.vul_random_zonder_dubbels();
 	//cout << "Voor sorteren: " << s << endl; 
 	//LeftPivotQuickSort<int> sorter;
@@ -74,10 +74,11 @@ int main(int argc, char** argv) {
 	//cout << "Na sorteren: " << s << endl;
 	//sorter.meet(10, 100000, std::cout);
 
-	MergeSort<int> s;
-	testAlgorithm(s, 19);
-	
-	
+	InsertionSort<int> sorter;
+	//testAlgorithm(sorter, 19);
+	sorter(s);
+	int found = one_sided_binary_search(590, s);
+	cout << "Index of 590 with one_sided_binary_search: " << found << endl;
 	cin.get();
 	return 0;
 }

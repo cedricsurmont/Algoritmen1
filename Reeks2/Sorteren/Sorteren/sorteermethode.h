@@ -89,8 +89,19 @@ class MergeSort : public Sorteermethode<T> {
 public:
 	void operator()(vector<T> & v) const;
 private:
-	void TopDownSplitMerge(vector<T> &b, int begin, int end, vector<T> &v) const;
-	void TopDownMerge(vector<T> &v, int begin, int middle, int end, vector<T> &b) const;
+	void TopDownSplitMerge(vector<T> &v, int begin, int end, vector<T> &help) const;
+	void TopDownMerge(vector<T> &v, int begin, int middle, int end, vector<T> &help) const;
+};
+/** \class MergeSort
+	Topdown, recursive version with only 1 additional auxiliary vector
+*/
+template <typename T>
+class BUMergeSort : public Sorteermethode<T> {
+public:
+	void operator()(vector<T> & v) const;
+private:
+	void BottomUpMergeSort(vector<T> &v, int begin, int end, vector<T> &help) const;
+	void BottomUpMerge(vector<T> &v, int begin, int middle, int end, vector<T> &help) const;
 };
 
 /** \class HeapSort
@@ -378,7 +389,7 @@ inline void LeftPivotQuickSort<T>::LeftPivotQuickSortSplit(vector<T>& v, int beg
 template<typename T>
 inline void RightPivotQuickSort<T>::operator()(vector<T>& v) const
 {
-	//Stackoverflow! Don't use
+	cerr << "RightPivotQuickSort: " << endl;
 	RightPivotQuickSortSplit(v, 0, v.size() - 1);
 }
 
@@ -401,7 +412,7 @@ inline void RightPivotQuickSort<T>::RightPivotQuickSortSplit(vector<T>& v, int b
 				i++;
 		}
 		RightPivotQuickSortSplit(v, begin, i-1 );
-		RightPivotQuickSortSplit(v, i , end);
+		RightPivotQuickSortSplit(v, i-1 , end);
 	}
 }
 
@@ -427,13 +438,13 @@ inline void DualPivotQuickSort<T>::dualPivotQuickSort(vector<T>& v, int begin, i
 template<typename T>
 inline int DualPivotQuickSort<T>::partition(vector<T>& v, int begin, int end, int * lp) const
 {
-	if (v.at(begin) > v.at(end))
+	if (v.at(begin) > v.at(end))		//in case left pivot would be smaller than right pivot
 		swap(v.at(begin), v.at(end));
 	int k = begin + 1;
 	int g = end - 1;
 	int m = begin + 1;
-	int leftPivot = v.at(begin);	
-	int rightPivot = v.at(end);		
+	T leftPivot = v.at(begin);	
+	T rightPivot = v.at(end);		
 	while (m <= g) {
 		//Check the m element and place it in the correct subarray
 		if (v.at(m) < leftPivot) {		
@@ -455,8 +466,8 @@ inline int DualPivotQuickSort<T>::partition(vector<T>& v, int begin, int end, in
 	//to set pivots to correct positions
 	k--;
 	g++;
-	swap(v.at(begin), v.at(k));
-	swap(v.at(end), v.at(g));
+	swap(v.at(begin), v.at(k));	//v[begin] is leftpivot
+	swap(v.at(end), v.at(g));   //v[end] is rightpivot
 
 	//return values
 	*lp = k;
@@ -484,3 +495,84 @@ inline void CountingSort<T>::operator()(vector<T>& v) const
 	v = output;
 }
 
+template<typename T>
+inline void BUMergeSort<T>::operator()(vector<T>& v) const
+{
+	vector<T> help((v.size() + 1) / 2);
+	BottomUpMergeSort(v, 0, v.size() - 1, help);
+}
+
+template<typename T>
+inline void BUMergeSort<T>::BottomUpMergeSort(vector<T>& v, int begin, int end, vector<T>& help) const
+{
+	cerr << "Bottom Up Mergesort: " << endl;
+	for (int width = 1; width < v.size(); width *= 2) {
+		for (int i = 0; i < v.size(); i += 2 * width) {	//Iterates every two subarrays
+			BottomUpMerge(v, i, std::min(i + width, (int)v.size()), std::min((i + 2 * width), (int)v.size()), help);
+		}
+	}
+}
+
+template<typename T>
+inline void BUMergeSort<T>::BottomUpMerge(vector<T>& v, int begin, int middle, int end, vector<T>& help) const
+{
+	//copy first half in to help vector, with vector initialization by using another vector's iterators
+	help = { v.begin() + begin, v.begin() + middle };
+	int j = begin;		//index for element in result matrix
+	int ri = middle;	//to check boundaries
+	middle -= begin;	//to check boundaries, middle is now the number of elements in the left half
+	int li = 0;			//to check boundaries
+	//zolang er elementen over zijn in de linker- en rechterhelft...
+	while (li < middle && ri < end) {
+		if (help.at(li) <= v.at(ri)) {
+			v.at(j) = move(help.at(li));
+			j++; li++;
+		}
+		else {
+			v.at(j) = move(v.at(ri));
+			j++; ri++;
+		}
+	}
+	//Add the rest of the other half
+	while (li < middle) {
+		v.at(j) = help.at(li);
+		j++; li++;
+	}
+	while (ri < end) {
+		v.at(j) = v.at(ri);
+		j++; ri++;
+	}
+}
+
+template <class T>
+int binary_search(const T &s, const vector<T> &v) {
+	int l = 0, r = v.size();
+	while (l < r - 1) {
+		int m = l + (r - l) / 2;
+		if (s < v.at(m))
+			r = m;
+		else
+			l = m;
+	}
+	return v.at(l) == s ? l : -1;
+}
+
+template <class T>
+int one_sided_binary_search(const T &s, const vector<T> &v) {
+	//can't use the size!
+	if (v.at(0) != s) {
+		int i = 1;
+		while (v.at(i) < s) {
+			i *= 2;
+			cout << "Index : " << i << endl;
+		}
+		//binary search between index i and i/2
+		vector<T> help = { v.begin() + i / 2, v.begin() + i };	//Make better binary_search function with begin & end index instead!
+		return i / 2 + binary_search(s, help);
+			
+	}
+	else {
+		return 0;
+	}
+
+}
