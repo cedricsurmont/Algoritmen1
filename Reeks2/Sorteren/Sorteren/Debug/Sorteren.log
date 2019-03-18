@@ -1,6 +1,17 @@
 ﻿  Source.cpp
 d:\school\2018-2019\algoritmen i\algoritmen1\reeks2\sorteren\sorteren\source.cpp(1): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 d:\school\2018-2019\algoritmen i\algoritmen1\reeks2\sorteren\sorteren\source.cpp(2): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+d:\school\2018-2019\algoritmen i\algoritmen1\reeks2\sorteren\sorteren\sorteermethode.h(172): warning C4018: '<': signed/unsigned mismatch
+d:\school\2018-2019\algoritmen i\algoritmen1\reeks2\sorteren\sorteren\sorteermethode.h(173): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+d:\school\2018-2019\algoritmen i\algoritmen1\reeks2\sorteren\sorteren\sorteermethode.h(182): warning C4018: '<': signed/unsigned mismatch
+d:\school\2018-2019\algoritmen i\algoritmen1\reeks2\sorteren\sorteren\sorteermethode.h(614): warning C4018: '>': signed/unsigned mismatch
+d:\school\2018-2019\algoritmen i\algoritmen1\reeks2\sorteren\sorteren\sorteermethode.h(670): warning C4018: '<': signed/unsigned mismatch
+d:\school\2018-2019\algoritmen i\algoritmen1\reeks2\sorteren\sorteren\sorteermethode.h(678): warning C4018: '<': signed/unsigned mismatch
+d:\school\2018-2019\algoritmen i\algoritmen1\reeks2\sorteren\sorteren\sorteermethode.h(683): warning C4018: '<': signed/unsigned mismatch
 d:\school\2018-2019\algoritmen i\algoritmen1\reeks2\sorteren\sorteren\source.cpp(3): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 d:\school\2018-2019\algoritmen i\algoritmen1\reeks2\sorteren\sorteren\source.cpp(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 d:\school\2018-2019\algoritmen i\algoritmen1\reeks2\sorteren\sorteren\csv.h(48): warning C4018: '<': signed/unsigned mismatch
@@ -9,18 +20,6 @@ d:\school\2018-2019\algoritmen i\algoritmen1\reeks2\sorteren\sorteren\csv.h(55):
 d:\school\2018-2019\algoritmen i\algoritmen1\reeks2\sorteren\sorteren\csv.h(56): warning C4018: '>': signed/unsigned mismatch
 d:\school\2018-2019\algoritmen i\algoritmen1\reeks2\sorteren\sorteren\csv.h(58): warning C4018: '>': signed/unsigned mismatch
 d:\school\2018-2019\algoritmen i\algoritmen1\reeks2\sorteren\sorteren\source.cpp(5): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-d:\school\2018-2019\algoritmen i\algoritmen1\reeks2\sorteren\sorteren\sorteermethode.h(200): warning C4018: '<': signed/unsigned mismatch
-  d:\school\2018-2019\algoritmen i\algoritmen1\reeks2\sorteren\sorteren\sorteermethode.h(199): note: while compiling class template member function 'void InsertionSort<int>::operator ()(std::vector<T,std::allocator<_Ty>> &) const'
-          with
-          [
-              T=int,
-              _Ty=int
-          ]
-  d:\school\2018-2019\algoritmen i\algoritmen1\reeks2\sorteren\sorteren\source.cpp(79): note: see reference to function template instantiation 'void InsertionSort<int>::operator ()(std::vector<T,std::allocator<_Ty>> &) const' being compiled
-          with
-          [
-              T=int,
-              _Ty=int
-          ]
-  d:\school\2018-2019\algoritmen i\algoritmen1\reeks2\sorteren\sorteren\source.cpp(77): note: see reference to class template instantiation 'InsertionSort<int>' being compiled
+d:\school\2018-2019\algoritmen i\algoritmen1\reeks2\sorteren\sorteren\source.cpp(87): warning C4018: '<': signed/unsigned mismatch
+d:\school\2018-2019\algoritmen i\algoritmen1\reeks2\sorteren\sorteren\source.cpp(92): warning C4018: '<': signed/unsigned mismatch
   Sorteren.vcxproj -> D:\School\2018-2019\Algoritmen I\Algoritmen1\Reeks2\Sorteren\Debug\Sorteren.exe

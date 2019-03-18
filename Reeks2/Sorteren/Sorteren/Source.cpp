@@ -66,19 +66,32 @@ void testVector(int size) {
 
 int main(int argc, char** argv) {
 	//pushen vanaf school //negeer dit
-	Sortvector<int> s(2000);
+	//Sortvector<int> s(2000);
 	//s.vul_random_zonder_dubbels();
 	//cout << "Voor sorteren: " << s << endl; 
 	//LeftPivotQuickSort<int> sorter;
 	//sorter(s);
 	//cout << "Na sorteren: " << s << endl;
 	//sorter.meet(10, 100000, std::cout);
-
-	InsertionSort<int> sorter;
-	//testAlgorithm(sorter, 19);
-	sorter(s);
-	int found = one_sided_binary_search(590, s);
-	cout << "Index of 590 with one_sided_binary_search: " << found << endl;
+	//vector<string> s2 = { "een", "twee", "drie", "vier", "vijf", "zes", "zeven", "acht", "negen", "aaa", "aba", "abb", "abba" };
+	//LSDRadixSort sorter;
+	////testAlgorithm(sorter, 19);
+	//sorter(s2);
+	//int found = one_sided_binary_search(590, s);
+	//cout << "Index of 590 with one_sided_binary_search: " << found << endl;
+	//for (int i = 0; i < s2.size(); i++) {
+	//	cout << s2.at(i) << "-";
+	//}
+	vector<double> s3 = { 0.23, 0.22, 0.35, 0.44, 0.55, 0.56, 0.98, 0.87 };
+	BucketSort sorter2;
+	for (int i = 0; i < s3.size(); i++) {
+		cout << s3.at(i) << "-";
+	}
+	sorter2(s3);
+	cout << "Na BucketSort: " << endl;
+	for (int i = 0; i < s3.size(); i++) {
+		cout << s3.at(i) << "-";
+	}
 	cin.get();
 	return 0;
 }

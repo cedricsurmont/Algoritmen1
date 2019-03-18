@@ -158,6 +158,33 @@ public:
 	void operator()(vector<T> & v) const;
 };
 
+/** \class BucketSort
+
+*/
+class BucketSort : public Sorteermethode<double> {
+public:
+	void operator()(vector<double> & v) const;
+};
+
+void BucketSort::operator()(vector<double> & v) const {
+	const int N = 10;
+	vector<double> b[N];
+	for (int i = 0; i < v.size(); i++) {
+		int bi = v.at(i) * N;
+		b[bi].push_back(v.at(i));
+	}
+	for (int i = 0; i < N; i++) {
+		std::sort(b[i].begin(), b[i].end());
+	}
+	int index = 0;
+	for (int i = 0; i < N; i++) {
+		
+		for (int j = 0; j < b[i].size(); i++) {
+			v.at(index) = b[i].at(j);
+			index++;
+		}
+	}
+}
 
 #endif 
 
@@ -576,3 +603,92 @@ int one_sided_binary_search(const T &s, const vector<T> &v) {
 	}
 
 }
+
+class MSDRadixSort : Sorteermethode<std::string> {
+public:
+	void operator()(vector<std::string> & v) const {
+		key_indexed_counting(v, 0, 0, v.size() - 1);
+	}
+private:
+	char get_key(std::string s, int pos) const { // returns the charactor on position 'pos' of string 's'
+		if (pos > s.length()) return ' ';
+		return s[pos];			
+	}
+
+
+	void key_indexed_counting(vector<std::string> &v, int key_index, int start, int einde) const {
+
+		if (start >= einde) return;
+		int R = 256;
+		vector<int> count(R + 1, 0);
+		//freq tabel invullen
+		//freq tabel cumulatief maken (specify destination)
+		//overloop origineel, copieer naar aux
+		//kopieer naar v;
+		vector<std::string> aux(einde - start + 1);
+		for (int i = start; i <= einde; i++)
+		{
+			count[get_key(v[i], key_index) + 1]++;
+		}
+		for (int r = 0; r < R; r++)
+		{
+			count[r + 1] += count[r];
+		}
+		for (int i = start; i <= einde; i++)
+		{
+			int dest = count[get_key(v[i], key_index)]++;
+			aux[dest] = v[i];
+		}
+		for (int i = 0; i < einde - start + 1; i++)
+		{
+			v[start + i] = aux[i];
+		}
+
+		for (int i = 0; i < R; i++)
+		{
+			key_indexed_counting(v, key_index + 1, start + count[i], start + count[i + 1] - 1);
+		}
+	}
+};
+
+//OPMERKING: we werken enkel met strings met vaste lengte W
+class LSDRadixSort : Sorteermethode<std::string> {
+public:
+
+	void operator()(vector<std::string> & v) const {
+		lsd_radix_sort(v, v[0].length());
+	}
+
+private:
+	void lsd_radix_sort(vector<std::string> & v, int W) const {
+		int R = 256;
+		vector<int>count(R + 1, 0);
+		vector<std::string>  aux;
+		for (int d = W - 1; d >= 0; d--)
+		{
+			//tel freq
+			for (int i = 0; i < v.size(); i++)
+			{
+				count[v[i][d]]++;
+			}
+			for (int r = 0; r < R; r++)
+			{
+				count[r + 1] = count[r];
+			}
+			for (int i = 0; i < v.size(); i++)
+			{
+				int dest = count[v[i][d]]++;
+				aux[dest] = v[i];
+			}
+			for (int i = 0; i < v.size(); i++)
+			{
+				v[i] = aux[i];
+			}
+			//maak cumulatief, bevat doeladress
+			//kopieer naar aux
+			// kopieer naar origineel
+
+		}
+	}
+};
+
