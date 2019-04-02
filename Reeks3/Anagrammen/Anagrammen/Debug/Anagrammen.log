@@ -1,0 +1,6 @@
+﻿  Source.cpp
+d:\school\2018-2019\algoritmen i\algoritmen1\reeks3\anagrammen\anagrammen\header.h(48): warning C4018: '>': signed/unsigned mismatch
+d:\school\2018-2019\algoritmen i\algoritmen1\reeks3\anagrammen\anagrammen\header.h(53): warning C4018: '<': signed/unsigned mismatch
+d:\school\2018-2019\algoritmen i\algoritmen1\reeks3\anagrammen\anagrammen\header.h(56): warning C4018: '>': signed/unsigned mismatch
+d:\school\2018-2019\algoritmen i\algoritmen1\reeks3\anagrammen\anagrammen\source.cpp(20): warning C4018: '<': signed/unsigned mismatch
+  Anagrammen.vcxproj -> D:\School\2018-2019\Algoritmen I\Algoritmen1\Reeks3\Anagrammen\Debug\Anagrammen.exe

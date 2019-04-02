@@ -46,7 +46,6 @@ public:
 		//overloop lijst
 		//maak nieuwe knoop voor elk element in de lijst
 		//voeg verwijzing toe van vorige naar deze knoop
-
 		//copy
 
 	Lijst(Lijst<T> &&lijst);
@@ -89,7 +88,7 @@ public:
 //dotformaat:
     public: void teken(const char * bestandsnaam)const;
 //uitschrijven: voor elke knoop de T-waarde, gescheiden door komma's
-    friend ostream& operator<< <>(ostream& os, const Lijst& l);
+    friend ostream& operator<<(ostream& os, const Lijst& l);
     public: void schrijf(ostream & os) const;
 
 
@@ -238,7 +237,6 @@ template<class T>
 inline Lijst<T>::Lijst(const Lijst<T>& lijst)
 {
 	cout << "copy constructor is used!" << endl;
-	
 
 }
 
