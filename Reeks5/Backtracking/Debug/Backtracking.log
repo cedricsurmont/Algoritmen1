@@ -1,0 +1,18 @@
+﻿  Source.cpp
+d:\school\2018-2019\algoritmen i\algoritmen1\reeks5\backtracking\source.cpp(1): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+d:\school\2018-2019\algoritmen i\algoritmen1\reeks5\backtracking\backtrack.h(2): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+d:\school\2018-2019\algoritmen i\algoritmen1\reeks5\backtracking\backtrack.h(59): warning C4018: '<': signed/unsigned mismatch
+d:\school\2018-2019\algoritmen i\algoritmen1\reeks5\backtracking\source.cpp(2): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+d:\school\2018-2019\algoritmen i\algoritmen1\reeks5\backtracking\backtrackflex.h(104): warning C4018: '<': signed/unsigned mismatch
+  d:\school\2018-2019\algoritmen i\algoritmen1\reeks5\backtracking\backtrackflex.h(102): note: while compiling class template member function 'void Backtrackflex<int>::printDeeloplossing(void)'
+  d:\school\2018-2019\algoritmen i\algoritmen1\reeks5\backtracking\backtrack.h(39): note: see reference to function template instantiation 'void Backtrackflex<int>::printDeeloplossing(void)' being compiled
+  d:\school\2018-2019\algoritmen i\algoritmen1\reeks5\backtracking\backtrack.h(7): note: see reference to class template instantiation 'Backtrackflex<int>' being compiled
+d:\school\2018-2019\algoritmen i\algoritmen1\reeks5\backtracking\backtrackflex.h(114): warning C4018: '<': signed/unsigned mismatch
+  d:\school\2018-2019\algoritmen i\algoritmen1\reeks5\backtracking\backtrackflex.h(112): note: while compiling class template member function 'void Backtrackflex<int>::printSom(void)'
+  d:\school\2018-2019\algoritmen i\algoritmen1\reeks5\backtracking\backtrack.h(40): note: see reference to function template instantiation 'void Backtrackflex<int>::printSom(void)' being compiled
+d:\school\2018-2019\algoritmen i\algoritmen1\reeks5\backtracking\backtrackflex.h(76): warning C4018: '<': signed/unsigned mismatch
+  d:\school\2018-2019\algoritmen i\algoritmen1\reeks5\backtracking\backtrackflex.h(63): note: while compiling class template member function 'void Backtrackflex<int>::losOp(bool &,bool)'
+  d:\school\2018-2019\algoritmen i\algoritmen1\reeks5\backtracking\backtrackflex.h(59): note: see reference to function template instantiation 'void Backtrackflex<int>::losOp(bool &,bool)' being compiled
+  d:\school\2018-2019\algoritmen i\algoritmen1\reeks5\backtracking\backtrackflex.h(56): note: while compiling class template member function 'void Backtrackflex<int>::losOp(bool)'
+  d:\school\2018-2019\algoritmen i\algoritmen1\reeks5\backtracking\source.cpp(17): note: see reference to function template instantiation 'void Backtrackflex<int>::losOp(bool)' being compiled
+  Backtracking.vcxproj -> D:\School\2018-2019\Algoritmen I\Algoritmen1\Reeks5\Debug\Backtracking.exe
