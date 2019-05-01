@@ -14,7 +14,7 @@ int main() {
 	//	cout << i << ":" << getallen[i] << endl;
 	//}
 
-	b.losOp(true);
+	b.losOp(false);
 
 	/*cout << b.controleerSomVierOpeenvolgende(4) << endl;
 	cout << b.controleerDrieOpeenvolgende(8) << endl;
